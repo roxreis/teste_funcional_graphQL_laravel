@@ -58,7 +58,6 @@ type AccountBank {
 }
 
 type Mutation {
-
     sacar(
         id: Int!
         conta: Int!
