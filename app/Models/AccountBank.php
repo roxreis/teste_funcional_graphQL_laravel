@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Mutation extends Model
+class AccountBank extends Model
 {
     use HasFactory;
 
@@ -13,5 +13,7 @@ class Mutation extends Model
     protected $fillable = [
         'conta', 'saldo',
     ];
+
+  
 
 }

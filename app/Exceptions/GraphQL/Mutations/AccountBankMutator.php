@@ -1,33 +1,30 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace graphql;
 
 use Illuminate\Http\Request;
-use App\Models\Mutation;
+use App\Models\AccountBank;
 
 
-class MutationController extends Controller
+class AccountBankMutator
 {
-    public function sacar(Request $request, $conta = 54321)
+    public function sacar($conta = 54321, $valorSacar)
     {
-        $requisicao = Mutation::where('conta', $conta)->get();
+        $requisicao = AccountBank::where('conta', $conta)->get();
          
         foreach($requisicao as $sacar): 
 
-            $valorSacar = $request->input('valor');
+            if($sacar->saldo > $valorSacar && $valorSacar > 0):
 
+                $sacar->saldo = $sacar->saldo - $valorSacar;
+                $sacar->save();
+
+                else: 
+
+                    return "Não existe saldo suficiente para esta operação";
+
+            endif;
         endforeach;
-
-        if($sacar->saldo > $valorSacar && $valorSacar > 0):
-
-            $sacar->saldo = $sacar->saldo - $valorSacar;
-            $sacar->save();
-
-            else: 
-
-                return "Não existe saldo suficiente para esta operação";
-
-        endif;
 
         return response()->json( [
             "data"=>[
@@ -41,7 +38,7 @@ class MutationController extends Controller
 
     public function depositar(Request $request, $conta = 54321)
     {
-        $requisicao = Mutation::where('conta', $conta)->get();
+        $requisicao = AccountBank::where('conta', $conta)->get();
 
         foreach($requisicao as $depositar): 
 
@@ -73,14 +70,14 @@ class MutationController extends Controller
     public function saldo($conta = 54321)
     {
         
-        $requisicao = Mutation::where('conta', $conta)->get();
+        $requisicao = AccountBank::where('conta', $conta)->get();
         
         foreach($requisicao as $saldo): 
 
             return response()->json([
-                "data"=>[
+                
                     'saldo' => $saldo->saldo
-                ]
+                
             ]);
 
         endforeach;

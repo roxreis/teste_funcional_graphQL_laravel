@@ -1,0 +1,82 @@
+"A date string with format `Y-m-d`, e.g. `2011-05-23`."
+scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
+
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+# type Query {
+#     users: [User!]! 
+#     user(id: ID @eq): User @find
+
+#     saldos: [Saldo!]! @paginate(defaultCount: 10)
+#     saldo($conta: Int): Saldo 
+    
+# }
+
+# type User {
+#     id: ID!
+#     name: String!
+#     email: String!
+#     created_at: DateTime!
+#     updated_at: DateTime!
+# }
+
+# type Accounts {
+#     id: ID!
+#     conta: String!
+#     saldo: String!
+#     created_at: DateTime!
+#     updated_at: DateTime!
+# }
+
+# type Mutation {
+#  sacar(conta: Int!, valor: Int!): User
+# }
+
+# type Mutation {
+#     sacar(
+#         conta: Int 
+#         saldo: Int 
+#     ): Post @create
+
+#     saldo(
+#         conta: Int 
+#         saldo: Int 
+#     ): Post @create
+# }
+
+type Query {
+  saldo(conta: Int! @eq): AccountBank @find  
+}
+
+type AccountBank {
+  id: ID!
+  saldo: String!
+  conta: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+type Mutation {
+
+    sacar(
+        id: Int!
+        conta: Int!
+        valor: Int!
+    ): AccountBank! 
+    @field(resolver: "AccountBankMutator@sacar")
+}
+
+
+# type Query {
+#    saldo: [Accounts!]! 
+#    saldo(conta: Int): Accounts @find
+# }
+
+# type Mutation {
+#   createPost(
+#     title: String @rules(apply: ["required", "min:2"])
+#     content: String @rules(apply: ["required", "min:12"])
+#   ): Post @create
+# }
+

@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MutationController;
+use App\Http\Controllers\AccountBankController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,6 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::post('/depositar', [MutationController::class,'depositar']);
-Route::post('/sacar', [MutationController::class,'sacar']);
-Route::post('/saldo', [MutationController::class,'saldo']);
+Route::post('/depositar', [AccountBankController::class,'depositar']);
+Route::post('/sacar', [AccountBankController::class,'sacar']);
+Route::post('/saldo', [AccountBankController::class,'saldo']);
